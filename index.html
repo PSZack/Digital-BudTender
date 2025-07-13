@@ -68,6 +68,13 @@
             visibility: visible;
             opacity: 1;
         }
+        /* Comparison Tray & Modal Styles */
+        #comparison-tray {
+            transition: transform 0.3s ease-in-out;
+        }
+        #comparison-modal-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -75,17 +82,20 @@
     <div class="container mx-auto p-4 sm:p-6 md:p-12">
         <!-- Header Section -->
         <header class="text-center mb-10 md:mb-16">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-3 tracking-tight">The Power of Terpenes</h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-                Discover the aromatic compounds that define a strain's scent, flavor, and unique effects through the 
-                <span class="tooltip-trigger font-semibold text-green-600">
-                    entourage effect
-                    <span class="tooltip-text">The theory that all compounds in cannabis work together synergistically. Cannabinoids and terpenes combine to enhance and modulate the overall effects of the plant.</span>
-                </span>.
-            </p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2 tracking-tight pb-2">Digital Budtender</h1>
+            <p class="text-xl text-gray-500 font-semibold">Powered by Pure Shaka</p>
         </header>
 
+        <!-- Strain of the Day Section -->
+        <section id="strain-of-the-day" class="mb-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl shadow-lg p-8 text-white text-center">
+            <h2 class="text-3xl font-bold mb-4">🌟 Strain of the Day 🌟</h2>
+            <div id="sotd-content" class="min-h-[100px] flex items-center justify-center">
+                <button id="sotd-button" class="action-button bg-white text-green-500 font-bold py-3 px-8 rounded-lg">Reveal Today's Feature</button>
+            </div>
+        </section>
+
         <!-- Terpenes Grid -->
+        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">The Power of Terpenes</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
            <!-- Myrcene Card -->
             <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 card-hover-effect">
@@ -225,35 +235,58 @@
                 <div class="mb-4">
                     <label for="strain-input" class="block text-xl font-semibold text-gray-700 mb-3 text-center">1. Analyze by Name</label>
                     <div class="flex flex-col sm:flex-row gap-2">
-                        <input type="text" id="strain-input" class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" placeholder="e.g., Ice Cream Cake, Gush Mintz...">
+                        <input type="text" id="strain-input" class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition" placeholder="e.g., 'Cake' or 'Gush Mintz'">
                         <button id="analyze-button" class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100 flex-shrink-0">
                             Analyze
                         </button>
                     </div>
                 </div>
 
-                <!-- Find by Effect Buttons -->
+                <!-- Find by Recreational Effect Buttons -->
                 <div class="mb-4 pt-4">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">2. Find by Effect</h3>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">2. Find by Recreational Effect</h3>
                     <div id="effect-buttons" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <button class="action-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Anxiety">Anxiety</button>
-                        <button class="action-button bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Pain Relief">Pain Relief</button>
-                        <button class="action-button bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Focus">Focus</button>
-                        <button class="action-button bg-green-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Sleep">Sleep</button>
-                        <button class="action-button bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Creativity">Creativity</button>
-                        <button class="action-button bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Energy">Energy</button>
+                        <button class="action-button bg-sky-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Uplifting">Uplifting</button>
+                        <button class="action-button bg-rose-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Social">Social</button>
+                        <button class="action-button bg-pink-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Giggly">Giggly</button>
+                        <button class="action-button bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Relaxing">Relaxing</button>
+                        <button class="action-button bg-fuchsia-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Creative">Creative</button>
+                        <button class="action-button bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg" data-effect="Energetic">Energetic</button>
                     </div>
                 </div>
                 
+                <!-- Find by Medicinal Effect Buttons -->
+                <div class="mb-8 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">3. Find by Medicinal Effect</h3>
+                    <div id="medicinal-buttons" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <button class="action-button bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Stress">Stress</button>
+                        <button class="action-button bg-red-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Pain">Pain</button>
+                        <button class="action-button bg-indigo-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Insomnia">Insomnia</button>
+                        <button class="action-button bg-yellow-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Depression">Depression</button>
+                        <button class="action-button bg-orange-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Inflammation">Inflammation</button>
+                        <button class="action-button bg-green-500 text-white font-semibold py-2 px-4 rounded-lg" data-medicinal="Nausea">Nausea</button>
+                    </div>
+                </div>
+
                 <!-- Find by Terpene Buttons -->
                 <div class="mb-8 pt-4">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">3. Find by Terpene</h3>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">4. Find by Terpene</h3>
                     <div id="terpene-buttons" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                         <button class="action-button bg-blue-200 text-blue-800 font-semibold py-2 px-4 rounded-lg" data-terpene="Myrcene">Myrcene</button>
                         <button class="action-button bg-yellow-200 text-yellow-800 font-semibold py-2 px-4 rounded-lg" data-terpene="Limonene">Limonene</button>
                         <button class="action-button bg-green-200 text-green-800 font-semibold py-2 px-4 rounded-lg" data-terpene="Pinene">Pinene</button>
                         <button class="action-button bg-purple-200 text-purple-800 font-semibold py-2 px-4 rounded-lg" data-terpene="Linalool">Linalool</button>
                         <button class="action-button bg-red-200 text-red-800 font-semibold py-2 px-4 rounded-lg col-span-2 lg:col-span-1" data-terpene="Caryophyllene">Caryophyllene</button>
+                    </div>
+                </div>
+
+                <!-- View Full Menu Button -->
+                <div class="mb-8 pt-4 border-t border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4 text-center">5. Or, View Our Full Menu</h3>
+                    <div class="text-center">
+                        <button id="full-menu-button" class="action-button bg-gray-700 text-white font-bold py-3 px-8 rounded-lg">
+                            Show All Strains
+                        </button>
                     </div>
                 </div>
 
@@ -277,6 +310,32 @@
         </section>
 
     </div>
+    
+    <!-- Comparison Modal -->
+    <div id="comparison-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-40">
+        <div id="comparison-modal" class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 relative">
+             <button id="close-modal-button" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-bold text-center mb-6">Strain Comparison</h2>
+            <div id="comparison-content"></div>
+        </div>
+    </div>
+
+    <!-- Comparison Tray -->
+    <div id="comparison-tray" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg transform translate-y-full z-30">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h3 class="font-bold">Comparing:</h3>
+                <div id="comparison-list" class="flex gap-4 mt-1"></div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="clear-comparison-button" class="text-sm text-gray-400 hover:text-white">Clear</button>
+                <button id="compare-now-button" class="bg-green-500 font-bold py-2 px-6 rounded-lg disabled:bg-gray-500 disabled:cursor-not-allowed">Compare Now</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // --- DOM Elements ---
@@ -284,47 +343,64 @@
         const strainInput = document.getElementById('strain-input');
         const effectButtonsContainer = document.getElementById('effect-buttons');
         const terpeneButtonsContainer = document.getElementById('terpene-buttons');
+        const medicinalButtonsContainer = document.getElementById('medicinal-buttons');
+        const fullMenuButton = document.getElementById('full-menu-button');
+        const sotdButton = document.getElementById('sotd-button');
+        const sotdContent = document.getElementById('sotd-content');
         const resultsContainer = document.getElementById('results');
         const loader = document.getElementById('loading-state');
         const loadingText = document.getElementById('loading-text');
         const emptyState = document.getElementById('empty-state');
         const errorMessage = document.getElementById('error-message');
+        
+        // Comparison Elements
+        const comparisonTray = document.getElementById('comparison-tray');
+        const comparisonListDiv = document.getElementById('comparison-list');
+        const compareNowButton = document.getElementById('compare-now-button');
+        const clearComparisonButton = document.getElementById('clear-comparison-button');
+        const modalOverlay = document.getElementById('comparison-modal-overlay');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const comparisonContent = document.getElementById('comparison-content');
+        
+        let comparisonList = [];
+        let allStrainData = {};
 
         // --- Pure Shaka Strain & Pricing Data ---
         const pureShakaMenu = [
-            { name: "Monkey Pie", tier: "Smalls" },
-            { name: "Octane Mint Sorbet", tier: "Smalls" },
-            { name: "Blue Dream", tier: "Smalls" },
-            { name: "Garlic Mintz", tier: "Smalls" },
-            { name: "Orange Fruity Pebbles", tier: "Smalls" },
-            { name: "Ice Cream Cake", tier: "Smalls" },
-            { name: "Georgia Pie", tier: "Smalls" },
-            { name: "Oreo Blizzard", tier: "Signature" },
-            { name: "Bubba Kush", tier: "Supreme" },
-            { name: "Purple Pomegranate", tier: "Supreme" },
-            { name: "Pave", tier: "Supreme" },
-            { name: "Tropical Summer", tier: "Supreme" },
-            { name: "Purple Push Pop", tier: "Supreme" },
-            { name: "Mac 9", tier: "Signature" },
-            { name: "Hella Jelly", tier: "Signature" },
-            { name: "Gush Mintz", tier: "Supreme" },
-            { name: "Grape Candy", tier: "Signature" },
-            { name: "White Wedding", tier: "Signature" },
-            { name: "Wonder Dawg", tier: "Signature" },
-            { name: "Island Cookies", tier: "Signature" },
-            { name: "Illuminati", tier: "Supreme" }
+            { name: "Illuminati", tier: "Supreme", thc: "21.12%" },
+            { name: "Island Cookies", tier: "Signature", thc: "20.00%" },
+            { name: "Wonder Dawg", tier: "Signature", thc: "18.73%" },
+            { name: "White Wedding", tier: "Signature", thc: "21.94%" },
+            { name: "Lemon Cherry Gelato", tier: "Supreme", thc: "28.74%" },
+            { name: "Grape Candy", tier: "Signature", thc: "17.00%" },
+            { name: "Gush Mintz", tier: "Supreme", thc: "24.58%" },
+            { name: "Hella Jelly", tier: "Signature", thc: "23.00%" },
+            { name: "Mac 9", tier: "Signature", thc: "25.08%" },
+            { name: "Purple Push Pop", tier: "Smalls", thc: "20.95%" },
+            { name: "Jungle Juice", tier: "Signature", thc: "24.15%" },
+            { name: "Georgia Pie", tier: "Smalls", thc: "20.09%" },
+            { name: "Purple Pomegranate", tier: "Supreme", thc: "31.00%" },
+            { name: "Blue Dream", tier: "Smalls", thc: "32.38%" },
+            { name: "Tropical Summer", tier: "Supreme", thc: "32.64%" },
+            { name: "Oreo Blizzard", tier: "Signature", thc: "29.67%" },
+            { name: "Bubba Kush", tier: "Supreme", thc: "33.26%" },
+            { name: "Pave", tier: "Supreme", thc: "32.09%" },
+            { name: "Garlic Mintz", tier: "Smalls", thc: "30.94%" },
+            { name: "Black Maple", tier: "Supreme", thc: "24.37%" },
+            { name: "Orange Fruity Pebbles", tier: "Smalls", thc: "18.73%" },
+            { name: "Wild Cherry Runtz", tier: "Supreme", thc: "27.00%" }
         ];
 
         const pricing = {
-            "Smalls":    "1g: $12 | 4g: $40 | 7g: $65 | 14g: $115 | 28g: $140",
-            "Signature": "1g: $15 | 4g: $45 | 7g: $70 | 14g: $120 | 28g: $165",
-            "Supreme":   "1g: $20 | 4g: $70 | 7g: $115 | 14g: $190 | 28g: $240"
+            "Smalls":    ["1g - $12", "4g - $40", "7g - $65", "14g - $115", "28g - $140"],
+            "Signature": ["1g - $15", "4g - $45", "7g - $70", "14g - $120", "28g - $165"],
+            "Supreme":   ["1g - $20", "4g - $70", "7g - $115", "14g - $190", "28g - $240"]
         };
         
         const tierColors = {
-            "Smalls": "text-blue-600",
+            "Smalls": "text-blue-500",
             "Signature": "text-orange-500",
-            "Supreme": "text-green-600"
+            "Supreme": "text-green-500"
         };
 
         const terpeneColors = {
@@ -344,17 +420,43 @@
             "Focused": "bg-amber-100 text-amber-800",
             "Energetic": "bg-orange-100 text-orange-800",
             "Creative": "bg-fuchsia-100 text-fuchsia-800",
-            "Pain Relief": "bg-teal-100 text-teal-800",
+            "Pain-Relief": "bg-teal-100 text-teal-800",
+            "Giggly": "bg-yellow-100 text-yellow-800",
+            "Social": "bg-cyan-100 text-cyan-800"
+        };
+        
+        const medicinalColors = {
+            "Stress": "bg-blue-100 text-blue-800",
+            "Depression": "bg-yellow-100 text-yellow-800",
+            "Pain": "bg-red-100 text-red-800",
+            "Insomnia": "bg-indigo-100 text-indigo-800",
+            "Inflammation": "bg-orange-100 text-orange-800",
+            "Nausea": "bg-green-100 text-green-800",
+            "Anxiety": "bg-purple-100 text-purple-800"
+        };
+        
+        const flavorIcons = {
+            "Citrus": '🍋', "Earthy": '🌿', "Pine": '🌲', "Floral": '🌸', "Sweet": '🍓', 
+            "Spicy": '🌶️', "Diesel": '⛽', "Berry": '🍇', "Woody": '🪵', "Herbal": '🌿', 
+            "Pepper": '🌶️', "Skunk": '🦨', "Cheese": '🧀', "Tropical": '🥭', "Mint": '🍃',
+            "Grape": '🍇', "Vanilla": '🍦', "Coffee": '☕', "Chemical": '🧪', "Pungent": '�',
+            "Flowery": '🌸', "Fruity": '🍉', "Nutty": '🌰', "Honey": '🍯', "Ammonia": '💨',
+            "default": '💨'
         };
 
         // --- Main Function to Call Gemini API ---
-        async function getStrainData(prompt) {
-            loader.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-            resultsContainer.innerHTML = '';
-            errorMessage.classList.add('hidden');
-            analyzeButton.disabled = true;
-            document.querySelectorAll('.action-button').forEach(btn => btn.disabled = true);
+        async function getStrainData(prompt, isSotd = false) {
+            if (!isSotd) {
+                loader.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                resultsContainer.innerHTML = '';
+                errorMessage.classList.add('hidden');
+                analyzeButton.disabled = true;
+                document.querySelectorAll('.action-button').forEach(btn => btn.disabled = true);
+                fullMenuButton.disabled = true;
+            } else {
+                sotdContent.innerHTML = '<div class="loader mx-auto"></div>';
+            }
 
             const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
             const payload = {
@@ -373,9 +475,13 @@
                                         "description": { "type": "STRING" },
                                         "strainType": { "type": "STRING" },
                                         "dominantTerpenes": { "type": "ARRAY", "items": { "type": "STRING" } },
-                                        "effects": { "type": "ARRAY", "items": { "type": "STRING" } }
+                                        "effects": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                        "medicinalBenefits": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                        "flavorProfile": { "type": "ARRAY", "items": { "type": "STRING" } },
+                                        "proTip": { "type": "STRING" },
+                                        "featuredSentence": { "type": "STRING" }
                                     },
-                                    required: ["strainName", "description", "strainType", "dominantTerpenes", "effects"]
+                                    required: ["strainName", "description", "strainType", "dominantTerpenes", "effects", "medicinalBenefits", "flavorProfile", "proTip"]
                                 }
                             }
                         },
@@ -385,7 +491,7 @@
             };
 
             try {
-                const apiKey = "AIzaSyAzkPLm9wjIbRcrl1EIr9dhiI8NoOjJXv8"; // Handled by environment
+                const apiKey = ""; // Handled by environment
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const response = await fetch(apiUrl, {
                     method: 'POST',
@@ -399,61 +505,195 @@
                 if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts) {
                     const jsonText = result.candidates[0].content.parts[0].text;
                     const parsedJson = JSON.parse(jsonText);
-                    displayResults(parsedJson.strains);
+                    
+                    if (isSotd) {
+                        displaySotd(parsedJson.strains[0]);
+                    } else {
+                        parsedJson.strains.forEach(strain => {
+                            allStrainData[strain.strainName] = strain;
+                        });
+                        displayResults(parsedJson.strains);
+                    }
                 } else {
                     throw new Error("No content received from the API.");
                 }
             } catch (error) {
                 console.error("Error calling Gemini API:", error);
-                errorMessage.textContent = 'Sorry, something went wrong. Please check your input and try again.';
-                errorMessage.classList.remove('hidden');
-                emptyState.classList.remove('hidden');
+                if (isSotd) {
+                    sotdContent.innerHTML = '<p>Could not load Strain of the Day. Please try again.</p>';
+                } else {
+                    errorMessage.textContent = 'Sorry, something went wrong. Please check your input and try again.';
+                    errorMessage.classList.remove('hidden');
+                    emptyState.classList.remove('hidden');
+                }
             } finally {
-                loader.classList.add('hidden');
-                analyzeButton.disabled = false;
-                document.querySelectorAll('.action-button').forEach(btn => btn.disabled = false);
+                 if (!isSotd) {
+                    loader.classList.add('hidden');
+                    analyzeButton.disabled = false;
+                    document.querySelectorAll('.action-button').forEach(btn => btn.disabled = false);
+                    fullMenuButton.disabled = false;
+                }
             }
         }
+        
+        const basePrompt = `You are an AI for a dispensary called Pure Shaka. Your available strains are strictly limited to this list: ${pureShakaMenu.map(s=>s.name).join(', ')}. For each strain you analyze, provide a brief description, its type (Indica, Sativa, or Hybrid), its likely dominant terpenes, its most common recreational effects, its potential medicinal benefits, its top 3 flavor profile keywords, and a creative "Budtender's Pro-Tip" (one sentence).`;
 
-        // --- Event Listener for "Analyze by Name" ---
+        // --- Event Listeners ---
         analyzeButton.addEventListener('click', () => {
-            const strainNames = strainInput.value.split(',').map(s => s.trim()).filter(s => s);
-            if (strainNames.length === 0) {
-                errorMessage.textContent = 'Please enter at least one strain name.';
+            const searchTerm = strainInput.value.trim().toLowerCase();
+            if (!searchTerm) {
+                errorMessage.textContent = 'Please enter a strain name or keyword.';
                 errorMessage.classList.remove('hidden');
                 emptyState.classList.remove('hidden');
                 return;
             }
-            loadingText.textContent = `Analyzing ${strainNames.join(', ')}...`;
-            const menuString = pureShakaMenu.map(s => s.name).join(', ');
-            const prompt = `You are an AI for a dispensary called Pure Shaka. Your available strains are strictly limited to this list: ${menuString}. From this list ONLY, analyze the following strains the user entered: ${strainNames.join(', ')}. If a user enters a strain not on the list, do not include it in the JSON output. For each valid strain, provide a brief description, its type (Indica, Sativa, or Hybrid), its likely dominant terpenes, and its most common effects.`;
+            const matchingStrains = pureShakaMenu.filter(strain => strain.name.toLowerCase().includes(searchTerm)).map(strain => strain.name);
+            if (matchingStrains.length === 0) {
+                errorMessage.textContent = `No strains found on our menu matching "${strainInput.value}".`;
+                errorMessage.classList.remove('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            loadingText.textContent = `Analyzing ${matchingStrains.join(', ')}...`;
+            const prompt = `${basePrompt} From your list ONLY, analyze the following strains: ${matchingStrains.join(', ')}.`;
             getStrainData(prompt);
         });
 
-        // --- Event Listener for "Find by Effect" Buttons ---
         effectButtonsContainer.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 const effect = e.target.dataset.effect;
                 loadingText.textContent = `Finding strains for ${effect}...`;
-                const menuString = pureShakaMenu.map(s => s.name).join(', ');
-                const prompt = `You are an AI for a dispensary called Pure Shaka. Your available strains are strictly limited to this list: ${menuString}. From this list ONLY, recommend up to three strains that are best for the following effect: "${effect}". For each recommended strain, provide a brief description, its type (Indica, Sativa, or Hybrid), its likely dominant terpenes, and its most common effects.`;
+                const prompt = `${basePrompt} From your list ONLY, recommend up to three strains that are best for the following recreational effect: "${effect}".`;
                 getStrainData(prompt);
             }
         });
         
-        // --- Event Listener for "Find by Terpene" Buttons ---
         terpeneButtonsContainer.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 const terpene = e.target.dataset.terpene;
                 loadingText.textContent = `Finding strains high in ${terpene}...`;
-                const menuString = pureShakaMenu.map(s => s.name).join(', ');
-                const prompt = `You are an AI for a dispensary called Pure Shaka. Your available strains are strictly limited to this list: ${menuString}. From this list ONLY, recommend up to three strains that are dominant in the terpene "${terpene}". For each recommended strain, provide a brief description, its type (Indica, Sativa, or Hybrid), its likely dominant terpenes, and its most common effects.`;
+                const prompt = `${basePrompt} From your list ONLY, recommend up to three strains that are dominant in the terpene "${terpene}".`;
                 getStrainData(prompt);
             }
         });
 
+        medicinalButtonsContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const medicinal = e.target.dataset.medicinal;
+                loadingText.textContent = `Finding strains for ${medicinal}...`;
+                const prompt = `${basePrompt} From your list ONLY, recommend up to three strains that are best for helping with the following medicinal effect: "${medicinal}".`;
+                getStrainData(prompt);
+            }
+        });
+        
+        fullMenuButton.addEventListener('click', () => {
+             loadingText.textContent = `Loading the full Pure Shaka menu...`;
+             const prompt = `${basePrompt} Please provide an analysis for ALL strains on your list.`;
+             getStrainData(prompt);
+        });
 
-        // --- Function to Display Results ---
+        sotdButton.addEventListener('click', () => {
+            const randomStrain = pureShakaMenu[Math.floor(Math.random() * pureShakaMenu.length)];
+            const prompt = `${basePrompt} Please provide an analysis for the following strain: ${randomStrain.name}. Also, add a short, engaging, one-sentence "featuredSentence" about why it's the featured strain of the day.`;
+            getStrainData(prompt, true);
+        });
+
+        // --- Comparison Logic ---
+        function addToCompare(strainName) {
+            if (comparisonList.length < 3 && !comparisonList.includes(strainName)) {
+                comparisonList.push(strainName);
+                updateComparisonTray();
+            } else if (comparisonList.length >= 3) {
+                alert("You can only compare up to 3 strains at a time.");
+            }
+        }
+
+        function updateComparisonTray() {
+            if (comparisonList.length > 0) {
+                comparisonTray.style.transform = 'translateY(0)';
+            } else {
+                comparisonTray.style.transform = 'translateY(100%)';
+            }
+            
+            comparisonListDiv.innerHTML = comparisonList.map(name => `<span class="bg-gray-700 px-2 py-1 rounded text-sm">${name}</span>`).join('');
+            compareNowButton.disabled = comparisonList.length < 2;
+        }
+
+        clearComparisonButton.addEventListener('click', () => {
+            comparisonList = [];
+            updateComparisonTray();
+        });
+
+        compareNowButton.addEventListener('click', () => {
+            buildComparisonModal();
+            modalOverlay.style.display = 'flex';
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
+        
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
+            }
+        });
+
+        function buildComparisonModal() {
+            let tableHtml = '<div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">';
+            
+            // Header Row
+            tableHtml += '<div class="font-bold p-2">Feature</div>';
+            comparisonList.forEach(strainName => {
+                const strainData = pureShakaMenu.find(s => s.name.toLowerCase() === strainName.toLowerCase());
+                const tierColor = tierColors[strainData.tier] || "text-gray-700";
+                tableHtml += `<div class="font-bold p-2 ${tierColor}">${strainName}</div>`;
+            });
+
+            const rows = ["Type", "Tier", "THC %", "Effects", "Medicinal", "Terpenes"];
+            rows.forEach(row => {
+                tableHtml += `<div class="font-bold p-2 text-left">${row}</div>`;
+                comparisonList.forEach(strainName => {
+                    const strain = allStrainData[strainName];
+                    const strainData = pureShakaMenu.find(s => s.name.toLowerCase() === strainName.toLowerCase());
+                    let content = '';
+                    switch(row) {
+                        case "Type": content = strain.strainType; break;
+                        case "Tier": content = strainData.tier; break;
+                        case "THC %": content = strainData.thc; break;
+                        case "Effects": content = strain.effects.join(', '); break;
+                        case "Medicinal": content = strain.medicinalBenefits.join(', '); break;
+                        case "Terpenes": content = strain.dominantTerpenes.join(', '); break;
+                    }
+                    tableHtml += `<div class="p-2 border-t">${content}</div>`;
+                });
+            });
+
+            tableHtml += '</div>';
+            comparisonContent.innerHTML = tableHtml;
+        }
+
+
+        // --- Display Functions ---
+        function displaySotd(strain) {
+            const strainData = pureShakaMenu.find(s => s.name.toLowerCase() === strain.strainName.toLowerCase());
+             if (!strainData) {
+                sotdContent.innerHTML = '<p>Could not load Strain of the Day. Please try again.</p>';
+                return;
+             }
+            sotdContent.innerHTML = `
+                <h3 class="text-3xl font-bold text-white cursor-pointer hover:underline" data-strain-name="${strain.strainName}">${strain.strainName}</h3>
+                <p class="mt-2 text-lg italic">"${strain.featuredSentence}"</p>
+                <p class="mt-2 text-sm">(Click the strain name above to see its full profile!)</p>
+            `;
+            sotdContent.querySelector('h3').addEventListener('click', (e) => {
+                const strainName = e.target.dataset.strainName;
+                strainInput.value = strainName;
+                analyzeButton.click();
+                document.getElementById('analyzer').scrollIntoView();
+            });
+        }
+
         function displayResults(strains) {
             resultsContainer.innerHTML = '';
             if (!strains || strains.length === 0) {
@@ -468,16 +708,26 @@
                 if (!strainData) return; // Don't display if not on the menu
 
                 const card = document.createElement('div');
-                card.className = 'bg-white border border-gray-200 rounded-xl p-6 transform transition-all duration-500 animate-fade-in';
+                card.className = 'bg-white border border-gray-200 rounded-xl p-6 transform transition-all duration-500 animate-fade-in flex flex-col';
                 
                 const terpenesHtml = strain.dominantTerpenes.map(terpene => {
                     const colorClass = terpeneColors[terpene] || 'bg-gray-100 text-gray-800';
-                    return `<span class="${colorClass} text-xs font-medium mr-2 px-2.5 py-1 rounded-full">${terpene}</span>`
+                    return `<span class="${colorClass} text-xs font-medium mr-2 mb-2 px-2.5 py-1 rounded-full inline-block">${terpene}</span>`
                 }).join('');
 
                 const effectsHtml = strain.effects.map(effect => {
                     const colorClass = effectColors[effect.replace(/\s+/g, '')] || 'bg-gray-100 text-gray-800';
-                    return `<span class="${colorClass} text-xs font-medium mr-2 px-2.5 py-1 rounded-full">${effect}</span>`
+                    return `<span class="${colorClass} text-xs font-medium mr-2 mb-2 px-2.5 py-1 rounded-full inline-block">${effect}</span>`
+                }).join('');
+                
+                const medicinalHtml = strain.medicinalBenefits.map(benefit => {
+                    const colorClass = medicinalColors[benefit.replace(/\s+/g, '')] || 'bg-gray-100 text-gray-800';
+                    return `<span class="${colorClass} text-xs font-medium mr-2 mb-2 px-2.5 py-1 rounded-full inline-block">${benefit}</span>`
+                }).join('');
+
+                const flavorHtml = strain.flavorProfile.map(flavor => {
+                    const icon = flavorIcons[flavor] || flavorIcons.default;
+                    return `<div class="flex items-center" title="${flavor}"><span class="text-xl">${icon}</span><span class="ml-1.5 text-sm text-gray-600">${flavor}</span></div>`;
                 }).join('');
 
                 let typeTagColor = 'bg-gray-200 text-gray-800';
@@ -488,28 +738,57 @@
                 const typeTagHtml = `<span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full ${typeTagColor} ml-2 flex-shrink-0">${strain.strainType}</span>`;
                 
                 const tierColor = tierColors[strainData.tier] || "text-gray-700";
-                const tierPrice = pricing[strainData.tier] || "N/A";
+                const tierPrice = pricing[strainData.tier] || [];
+                const pricingHtml = tierPrice.map(p => `<p class="text-base text-gray-700 font-semibold font-mono">${p}</p>`).join('');
+
 
                 card.innerHTML = `
-                    <div class="flex items-center justify-between mb-1 flex-wrap gap-y-2">
-                        <h4 class="text-xl font-bold ${tierColor}">${strain.strainName}</h4>
-                        ${typeTagHtml}
+                    <div class="flex-grow">
+                        <div class="flex items-center justify-between mb-1 flex-wrap gap-y-2">
+                            <h4 class="text-xl font-bold text-gray-800">${strain.strainName}</h4>
+                            ${typeTagHtml}
+                        </div>
+                        <div class="mb-2 border-b pb-2">
+                            <p class="font-bold text-sm ${tierColor}">${strainData.tier} Tier</p>
+                            <p class="font-bold text-lg text-gray-800 mt-1">THC: ${strainData.thc}</p>
+                            <div class="mt-2">${pricingHtml}</div>
+                        </div>
+                        <p class="text-gray-600 mb-4 text-sm">${strain.description}</p>
+                        <div class="mb-4">
+                            <h5 class="font-semibold text-gray-700 mb-2 text-sm">Flavor Profile:</h5>
+                            <div class="flex flex-wrap gap-x-4 gap-y-2">${flavorHtml}</div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="font-semibold text-gray-700 mb-2 text-sm">Common Effects:</h5>
+                            <div class="flex flex-wrap">${effectsHtml}</div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="font-semibold text-gray-700 mb-2 text-sm">Potential Medicinal Benefits:</h5>
+                            <div class="flex flex-wrap">${medicinalHtml}</div>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-gray-700 mb-2 text-sm">Likely Dominant Terpenes:</h5>
+                            <div class="flex flex-wrap">${terpenesHtml}</div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200">
+                            <h5 class="font-semibold text-gray-700 mb-1 text-sm">Budtender's Pro-Tip:</h5>
+                            <p class="text-sm text-gray-600 italic">"${strain.proTip}"</p>
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <p class="font-bold text-sm ${tierColor}">${strainData.tier} Tier</p>
-                        <p class="text-sm text-gray-600 font-semibold font-mono">${tierPrice}</p>
-                    </div>
-                    <p class="text-gray-600 mb-4 text-sm">${strain.description}</p>
-                    <div class="mb-4">
-                        <h5 class="font-semibold text-gray-700 mb-2 text-sm">Common Effects:</h5>
-                        <div class="flex flex-wrap gap-2">${effectsHtml}</div>
-                    </div>
-                    <div>
-                        <h5 class="font-semibold text-gray-700 mb-2 text-sm">Likely Dominant Terpenes:</h5>
-                        <div class="flex flex-wrap gap-2">${terpenesHtml}</div>
+                    <div class="mt-4 pt-4 border-t border-gray-200 text-center">
+                        <button class="add-to-compare-btn bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg w-full" data-strain-name="${strain.strainName}">
+                            Add to Compare
+                        </button>
                     </div>
                 `;
                 resultsContainer.appendChild(card);
+            });
+            
+            // Add event listeners to the new compare buttons
+            document.querySelectorAll('.add-to-compare-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    addToCompare(e.target.dataset.strainName);
+                });
             });
             
             const keyframes = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }`;
@@ -520,3 +799,4 @@
     </script>
 </body>
 </html>
+�
